@@ -5,6 +5,8 @@ from tkinter import messagebox
 
 root = Tk()
 root.title("Facebook")
+root.config(background='#01242F')
+root.geometry("505x705")
 conn = sqlite3.connect("facebook.db")
 c = conn.cursor()
 
@@ -23,7 +25,7 @@ c = conn.cursor()
 def submit():
     conn = sqlite3.connect("facebook.db")
     c = conn.cursor()
-    c.execute("INSERT INTO User VALUES (:firstname, :lastname, :age, :address, :city, :zipcode, :password, :Gendeer)",{
+    c.execute("INSERT INTO User VALUES (:firstname, :lastname, :age, :address, :city, :zipcode, :password, :gender)",{
         'firstname': f_name.get(),
         'lastname': l_name.get(),
         'age': age.get(),
@@ -31,7 +33,7 @@ def submit():
         'city': city.get(),
         'zipcode': zipcode.get(),
         'password': password.get(),
-        'Gendeer': gender.get()
+        'gender': gender.get()
     })
     messagebox.showinfo("Success", "Database has been added")
     conn.commit()
@@ -50,11 +52,12 @@ def query():
     c = conn.cursor()
     c.execute("SELECT *, oid FROM User")
     records = c.fetchall()
+    print(records)
     print_records = ""
     for record in records:
         print_records += str(record[0]) + ' ' + str(record[1]) + ' ' + str(record[2]) + ' ' + str(record[3]) + ' ' + str(record[4]) + ' ' + str(record[5]) + ' ' + str(record[6]) + ' ' + str(record[7]) + '\t' + str(record[8]) + "\n"
     query_label = Label(root, text=print_records)
-    query_label.grid(row=10, column=0, columnspan=2)
+    query_label.place(x=100,y=500)
 
     conn.commit()
     conn.close()
@@ -180,79 +183,81 @@ def edit():
     edit_btn = Button(editor, text = "Save",command=update)
     edit_btn.grid(row = 8, column = 1, padx = 20, pady = (0, 10))
 
+fbSignUp = Label(padx=12,text="Sign Up", font=("Arial", 22),fg="white", bg="#122e58")    
+fbSignUp.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+
 f_name = Entry(root, width=30)
-f_name.grid(row=0, column=1, padx = 20)
+f_name.grid(row=1, column=1, padx = 20)
 
 l_name = Entry(root, width=30)
-l_name.grid(row=1, column=1, padx = 20)
+l_name.grid(row=2, column=1, padx = 20)
 
 age = Entry(root, width=30)
-age.grid(row=2, column=1, padx = 20)
+age.grid(row=3, column=1, padx = 20)
 
 address = Entry(root, width=30)
-address.grid(row=3, column=1, padx = 20)
+address.grid(row=4, column=1, padx = 20)
 
 city = Entry(root, width=30)
-city.grid(row=4, column=1, padx = 20)
+city.grid(row=5, column=1, padx = 20)
 
 zipcode = Entry(root, width=30)
-zipcode.grid(row=5, column=1, padx = 20)
+zipcode.grid(row=6, column=1, padx = 20)
 
 password = Entry(root, width=30)
-password.grid(row=6, column=1, padx = 20)
+password.grid(row=7, column=1, padx = 20)
 
 gender = Entry(root, width=30)
-gender.grid(row=7, column=1, padx = 20)
+gender.grid(row=8, column=1, padx = 20)
 
-delete_box = Entry(root, width=30)
-delete_box.grid(row=11, column=1, padx = 20)
-
-update_box = Entry(root, width=30)
-update_box.grid(row=13, column=1, padx = 20)
+delete_box = Entry(root, width=8)
+delete_box.place(x=100,y=410)
 
 
-f_name_label = Label(root, text="First Name")
-f_name_label.grid(row=0, column=0)
-
-l_name_label = Label(root, text="Last Name")
-l_name_label.grid(row=1, column=0)
-
-age_label = Label(root, text="Age")
-age_label.grid(row=2, column=0)
-
-address_label = Label(root, text="Address")
-address_label.grid(row=3, column=0)
-
-city_label = Label(root, text="City")
-city_label.grid(row=4, column=0)
-
-zipcode_label = Label(root, text="Zipcode")
-zipcode_label.grid(row=5, column=0)
-
-password_label = Label(root, text="Password")
-password_label.grid(row=6, column=0)
-
-gender_label = Label(root, text="Gendeer")
-gender_label.grid(row=7, column=0)
-
-delete_box_label = Label(root, text="Delete")
-delete_box_label.grid(row=11, column=0)
-
-update_box_label = Label(root, text="Update")
-update_box_label.grid(row=13, column=0)
+update_box = Entry(root, width=8)
+update_box.place(x=280,y=410)
 
 
-submit_btn = Button(root, text="Submit", command=submit)
-submit_btn.grid(row=8, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
 
-query_btn = Button(root, text="Show Data", command=query)
-query_btn.grid(row=9, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
+f_name_label = Label(root, text="First Name",width=9,bg="#122e58",fg="white")
+f_name_label.grid(row=1, column=0)
 
-delete_btn = Button(root, text="Delete", command=delete)
-delete_btn.grid(row=12, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
+l_name_label = Label(root, text="Last Name",width=9,bg="#122e58",fg="white")
+l_name_label.grid(row=2, column=0)
 
-edit_btn = Button(root, text="Update", command=edit)
-edit_btn.grid(row=14, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
+age_label = Label(root, text="Age",width=9,bg="#122e58",fg="white")
+age_label.grid(row=3, column=0)
+
+address_label = Label(root, text="Address",width=9,bg="#122e58",fg="white")
+address_label.grid(row=4, column=0)
+
+city_label = Label(root, text="City",width=9,bg="#122e58",fg="white")
+city_label.grid(row=5, column=0)
+
+zipcode_label = Label(root, text="Zipcode",width=9,bg="#122e58",fg="white")
+zipcode_label.grid(row=6, column=0)
+
+password_label = Label(root, text="Password",width=9,bg="#122e58",fg="white")
+password_label.grid(row=7, column=0)
+
+gender_label = Label(root, text="Gendeer",width=9,bg="#122e58",fg="white")
+gender_label.grid(row=8, column=0)
+
+
+submit_btn = Button(root, text="Submit", command=submit,width=10,bg="#0c6fca",fg="white")
+submit_btn.place(x=200,y=300)
+
+query_btn = Button(root, text="Show Data", command=query,width=14,bg="#0d4b84",fg="white")
+query_btn.place(x=178,y=340)
+
+
+delete_btn = Button(root, text="Delete", command=delete,fg='white',bg='#b40d0d')
+delete_btn.place(x=100,y=440)
+
+
+edit_btn = Button(root, text="Update", command=edit,bg='#11b408',fg='white')
+edit_btn.place(x=280,y=440)
+
 
 conn.commit()
 conn.close()
