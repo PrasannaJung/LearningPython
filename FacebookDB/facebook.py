@@ -106,7 +106,7 @@ def edit():
     global editor 
     editor = Toplevel()
     editor.title("Update a Data")
-    editor.geometry("300x450")
+    editor.geometry("500x450")
     conn = sqlite3.connect("facebook.db")
     c = conn.cursor()
     record_id = update_box.get()
@@ -180,7 +180,7 @@ def edit():
         password_editor.insert(0, record[6])
         gender_editor.insert(0, record[7])
 
-    edit_btn = Button(editor, text = "Save",command=update)
+    edit_btn = Button(editor, text = "Save",command=update,background='green',fg='white')
     edit_btn.grid(row = 8, column = 1, padx = 20, pady = (0, 10))
 
 fbSignUp = Label(padx=12,text="Sign Up", font=("Arial", 22),fg="white", bg="#122e58")    
